@@ -231,11 +231,11 @@ void WIFI2_init(void)
 int main()
 {
  
-  STM32_IAR_SYS_INIT();
-    UART4_init(36, 115200);//debug
-    Usart_init(2,115200);// usart2£¬GPRS
-  Usart_init(3,9600);  //uart3,485
-  TIM4_Int_Init(1999,3599);
+  STM32_IAR_SYS_INIT();  //ÄÚ²¿36M
+    UART4_init(36, 115200);//uart4£¬115200£¬debug
+    Usart_init(2,115200);// usart2£¬115200£¬GPRS
+  Usart_init(3,9600);  //uart3£¬9600£¬485
+  TIM4_Int_Init(1999,3599);  //2000 * 3600 / 36M = 200ms
 
   RTC_Init();
   Apply_Space();          

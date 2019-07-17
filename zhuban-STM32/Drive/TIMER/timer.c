@@ -123,19 +123,19 @@ void TIM4_IRQHandler(void)
   }				   
   TIM4->SR&=~(1<<0);//清除中断标志位 	    time3_cnt++;
 }
-//通用定时器3中断初始化
+//通用定时器4中断初始化
 //这里时钟选择为APB1的2倍，而APB1为36M
 //arr：自动重装值。
 //psc：时钟预分频数
-//这里使用的是定时器3!
+//这里使用的是定时器4
 void TIM4_Int_Init(u16 arr,u16 psc)
 {
-  RCC->APB1ENR|=1<<2;	//TIM3时钟使能    
-  TIM4->ARR=arr;  	//设定计数器自动重装值//刚好1ms    
-  TIM4->PSC=psc;  	//预分频器7200,得到10Khz的计数时钟		  
-  TIM4->DIER|=1<<0;   //允许更新中断	  
+  RCC->APB1ENR|=1<<2;	//TIM4时钟使能
+  TIM4->ARR=arr;  	//设定计数器自动重装值，2000 / 10 = 200ms
+  TIM4->PSC=psc;  	//预分频器3600，36M/3600 = 0.01M = 10K
+  TIM4->DIER|=1<<0;   //允许更新中断
   TIM4->CR1|=0x01;    //使能定时器3
-  MY_NVIC_Init(1,3,TIM4_IRQn,2);//抢占1，子优先级3，组2									 
+  MY_NVIC_Init(1,3,TIM4_IRQn,2);//抢占1，子优先级3，组2
 }
 
 

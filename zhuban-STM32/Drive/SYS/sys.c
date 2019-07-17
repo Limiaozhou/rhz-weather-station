@@ -16,12 +16,12 @@
 * 添加人   ---> 熊婕 
 * 添加时间 ---> 2016-11-4
 **********************************************************/
-void STM32_IAR_SYS_INIT()
-{
-  RCC->CR|=0X0005583;
-  RCC->CFGR|=0X1C000A;
-  RCC->CFGR&=~(0X1<<16);
-  RCC->CR|=1<<24;
+void STM32_IAR_SYS_INIT()  //内部36M
+{  //AHB不分频-36M，低速APB(APB1)不分频-36M，高速APB(APB2)不分频-36M
+  RCC->CR|=0X0005583;  //内部高速时钟使能、就绪、调整、校准，8M
+  RCC->CFGR|=0X1C000A;  //PLL作系统时钟，HSI振荡器时钟经2分频后作为PLL输入时钟，PLL 9倍频输出，36M
+  RCC->CFGR&=~(0X1<<16);  //HSI振荡器时钟经2分频后作为PLL输入时钟
+  RCC->CR|=1<<24;  //PLL使能
  // Hcho_Adc_Init();
 #ifdef APP
   MY_NVIC_SetVectorTable(NVIC_VectTab_FLASH, 0x010000);
