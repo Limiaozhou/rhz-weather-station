@@ -31,6 +31,8 @@
 #include "wat_fer.h"
 #include "rs485_deal.h"
 
+#include "hmi.h"
+
 ////////////////////////////////////////////////////////////////////////////////// 
 //主函数
 //xj
@@ -233,7 +235,7 @@ int main()
  
   STM32_IAR_SYS_INIT();  //内部36M
     UART4_init(36, 115200);//uart4，115200，debug
-    Usart_init(2,115200);// usart2，115200，GPRS
+    Usart_init(2,9600);// usart2，9600，hmi
   Usart_init(3,9600);  //uart3，9600，485
   TIM4_Int_Init(1999,3599);  //2000 * 3600 / 36M = 200ms
 
@@ -275,7 +277,19 @@ int main()
       {
         send485_flag=0;
         send_Cmd();	//发送485命令，读传感器
-      }   
+      }
+      
+      if(send485_flag)
+      {
+        send485_flag=0;
+        send_Cmd();	 //发送485命令，读传感器
+      }
+      
+      if(hmi_send_flag)  //5s
+      {
+        hmi_send_flag = 0;
+        hmi_send();  //发送屏幕数据
+      }
     }
   }
   mem_free(SRAMIN, sizeof(ST_EVNBALEDAT));

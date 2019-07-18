@@ -15,6 +15,9 @@
 //////////////////////////////////////////////////////////////////////////////////   
  #define CLI() __set_PRIMASK(1) //关闭中断
  #define SEI() __set_PRIMASK(0)  //开启中断
+
+extern char hmi_send_flag;  //屏幕发送标志位
+
 void TIM4_Int_Init(u16 arr,u16 psc);
 #endif
 

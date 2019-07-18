@@ -49,7 +49,8 @@ char blender_start_flag =0;
 int blender_cnt =0;
 char blender_flag = 0;
 
-
+char hmi_send_flag = 0;  //屏幕发送标志位
+char hmi_send_cnt = 0;  //屏幕发送计时
 
 void TIM4_IRQHandler(void)
 { 		    		  			    
@@ -119,7 +120,11 @@ void TIM4_IRQHandler(void)
       blender_cnt = 0;
     }
     
-    
+    if(hmi_send_cnt++ >= 25)  //5s
+    {
+      hmi_send_flag = 1;
+      hmi_send_cnt = 0;
+    }
   }				   
   TIM4->SR&=~(1<<0);//清除中断标志位 	    time3_cnt++;
 }
