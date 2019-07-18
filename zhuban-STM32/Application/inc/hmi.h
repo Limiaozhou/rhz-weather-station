@@ -4,6 +4,7 @@
 #include "stdio.h"
 #include "usart.h"
 #include "data.h"
+#include "delay.h"
 
 void hmi_send(void);
 

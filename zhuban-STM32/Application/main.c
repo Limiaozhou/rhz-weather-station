@@ -268,21 +268,15 @@ int main()
         GenericApp_package_Deal(3);  //get_RTU_data
       }
 
-      if(send_flag)
+      if(send_flag)  //10s
       {
         send();	//发送数据到服务器
         send_flag=0;
       }
-      if(send485_flag)
+      if(send485_flag)  //2s
       {
         send485_flag=0;
         send_Cmd();	//发送485命令，读传感器
-      }
-      
-      if(send485_flag)
-      {
-        send485_flag=0;
-        send_Cmd();	 //发送485命令，读传感器
       }
       
       if(hmi_send_flag)  //5s

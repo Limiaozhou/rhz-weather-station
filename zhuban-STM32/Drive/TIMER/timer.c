@@ -64,7 +64,7 @@ void TIM4_IRQHandler(void)
       send485_cnt=0;
     }
     
-    if(send_cnt++>=send_time)
+    if(send_cnt++>=send_time)  //50£¬10s
     {
       send_flag=1;
       send_cnt=0;

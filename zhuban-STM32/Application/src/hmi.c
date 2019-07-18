@@ -11,11 +11,13 @@ void hmi_send(void)  //·¢ËÍÆÁÄ»Êý¾Ý
     len = sprintf((char *)buf, "x0.val=%d", data);
     USART_Puts(USART2, buf, len);
     USART_Puts(USART2, end_buf, 3);
+    delay_ms(100);
     
     data = (int)(sensor.humi * 100);
     len = sprintf((char *)buf, "x1.val=%d", data);
     USART_Puts(USART2, buf, len);
     USART_Puts(USART2, end_buf, 3);
+    delay_ms(100);
     
     data = (int)(sensor.light * 100);
     len = sprintf((char *)buf, "x2.val=%d", data);
