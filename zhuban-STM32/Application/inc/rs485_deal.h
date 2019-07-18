@@ -79,6 +79,7 @@
 #define light_485 0x06
 
 #define  SO2_485 0x6E
+#define  yuxue_485 0x18  // «∑Ò”–”Í—©
 
 typedef struct
 {

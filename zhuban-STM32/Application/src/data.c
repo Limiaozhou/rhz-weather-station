@@ -115,12 +115,12 @@ void Evn_Packagedat()
     /*十进制21，  21+3；
     6x(x是传感器类型psenddat->data.len )+2个crc16+2个tea+2个cmdlen+8个地址code+4个头长版本-3
     （从第三个开始不含第三个）；15+6x*/
-	psenddat->len = 15+6*10;
+	psenddat->len = 15+6*6;
 
 	psenddat->ver = 38;
 	mem_copy(psenddat->addr, addr, 8);
 	psenddat->data.cmd = 0xD0;
-	psenddat->data.len = 6*10;//十进制6,多少种检测参数，一种6字节
+	psenddat->data.len = 6*6;//十进制6,多少种检测参数，一种6字节
 
 //	psenddat->data.shade.key[0] = 0x01;
 //	psenddat->data.shade.key[1] = 0x44; // 小棚遮阳服务器上的地址
@@ -133,9 +133,9 @@ void Evn_Packagedat()
 //        mem_copy(psenddat->data.pm25.dat, (unsigned char*)&(sensor.pm25), 4);
 
 	
-	psenddat->data.co2.key[0] = 0x00;
-	psenddat->data.co2.key[1] = 0x7A; //CO2
-	mem_copy(psenddat->data.co2.dat, (unsigned char*)&(sensor.co2), 4);
+//	psenddat->data.co2.key[0] = 0x00;
+//	psenddat->data.co2.key[1] = 0x7A; //CO2
+//	mem_copy(psenddat->data.co2.dat, (unsigned char*)&(sensor.co2), 4);
         
     psenddat->data.temp.key[0] = 0x00;
 	psenddat->data.temp.key[1] = 0x80; //温度
@@ -149,9 +149,9 @@ void Evn_Packagedat()
 	psenddat->data.light.key[1] = 0x06; //光照
 	mem_copy(psenddat->data.light.dat, (unsigned char*)&(sensor.light), 4);
     
-    psenddat->data.tvoc.key[0] = 0x00;
-	psenddat->data.tvoc.key[1] = 0x7C; //TVOC
-	mem_copy(psenddat->data.tvoc.dat, (unsigned char*)&(sensor.tvoc), 4);
+//    psenddat->data.tvoc.key[0] = 0x00;
+//	psenddat->data.tvoc.key[1] = 0x7C; //TVOC
+//	mem_copy(psenddat->data.tvoc.dat, (unsigned char*)&(sensor.tvoc), 4);
     
     psenddat->data.fx.key[0] = 0x00;
 	psenddat->data.fx.key[1] = 0x04; //风向
@@ -165,17 +165,21 @@ void Evn_Packagedat()
 //	psenddat->data.so2.key[1] = 0x6E; //so2
 //	mem_copy(psenddat->data.so2.dat, (unsigned char*)&(sensor.so2), 4);
     
-    psenddat->data.ultvio.key[0] = 0x00;
-	psenddat->data.ultvio.key[1] = 0x0A; //紫外线
-	mem_copy(psenddat->data.ultvio.dat, (unsigned char*)&(sensor.ultvio), 4);
+//    psenddat->data.ultvio.key[0] = 0x00;
+//	psenddat->data.ultvio.key[1] = 0x0A; //紫外线
+//	mem_copy(psenddat->data.ultvio.dat, (unsigned char*)&(sensor.ultvio), 4);
+//    
+//    psenddat->data.pressure.key[0] = 0x00;
+//	psenddat->data.pressure.key[1] = 0x84; //气压
+//	mem_copy(psenddat->data.pressure.dat, (unsigned char*)&(sensor.pressure), 4);
+//    
+//    psenddat->data.pm25.key[0] = 0x00;
+//	psenddat->data.pm25.key[1] = 0x68; //PM2.5
+//	mem_copy(psenddat->data.pm25.dat, (unsigned char*)&(sensor.pm25), 4);
     
-    psenddat->data.pressure.key[0] = 0x00;
-	psenddat->data.pressure.key[1] = 0x84; //气压
-	mem_copy(psenddat->data.pressure.dat, (unsigned char*)&(sensor.pressure), 4);
-    
-    psenddat->data.pm25.key[0] = 0x00;
-	psenddat->data.pm25.key[1] = 0x68; //PM2.5
-	mem_copy(psenddat->data.pm25.dat, (unsigned char*)&(sensor.pm25), 4);
+    psenddat->data.yuxue.key[0] = 0x00;
+	psenddat->data.yuxue.key[1] = 0x18; //是否有雨雪
+	mem_copy(psenddat->data.yuxue.dat, (unsigned char*)&(sensor.yuxue), 4);
     
 	Check_CalaCRC16((unsigned char *)psenddat + 3, psenddat->len - 2);
   
