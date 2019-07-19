@@ -42,14 +42,14 @@ void Init_Timer4(void)
     TIM4_CR1=0x01;//使能计数器
     TIM4_IER=0x00;
     TIM4_IER=0x01;//更新中断使能
-    TIM4_EGR=0x01;
+    TIM4_EGR=0x01;  //计数器重新初始化并产生更新
     TIM4_CNTR=255;//计数器值
-    TIM4_ARR=255;//自动重装的值
+    TIM4_ARR=255;//自动重装的值，T = 256 * 8 us = 2048us = 2.048ms
 //    TIM2_ARRH=0x7A;       //自动重装的值 0x3e7e =1600;Fpwm=16000000/1600=10000HZ
 //  TIM2_ARRL=0x12;
-    TIM4_PSCR=0x07;//分频值 128
-
+    TIM4_PSCR=0x07;//分频值 128，16M / 2^7 =  1/8 MHz
 }
+
 int time1 = 0;
 int time2 = 0;
 int time3 = 0;

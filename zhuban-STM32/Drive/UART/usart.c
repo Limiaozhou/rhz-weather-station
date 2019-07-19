@@ -220,15 +220,14 @@ void GenericApp_package_Deal(unsigned char Num)
   {
   case 1://wifi2 uart1
 //    USART_Puts(UART4, (unsigned char *)USART1_RX_BUF, strlen(USART1_RX_BUF));//debug
-    if(find_str((const char *)USART1_RX_BUF, HEAD,UART_RX_LEN,2))
-    {  
-      
-      USART1_RX_cnt++;
-    }
+//    if(find_str((const char *)USART1_RX_BUF, HEAD, UART_RX_LEN, 2))
+//    {
+//      USART1_RX_cnt++;
+//    }
     IWDG_Feed();
 //    WIFI_RxDeal(USART1_RX_BUF, UART_RX_LEN-MYDMA_GetCurrDataCounter(DMA1_Channel5));//检测wifi状态吧
 //
-    Deal_Uart(USART1_RX_BUF,UART_RX_LEN-MYDMA_GetCurrDataCounter(DMA1_Channel5),1);
+    Deal_Uart(USART1_RX_BUF,UART_RX_LEN-MYDMA_GetCurrDataCounter(DMA1_Channel5),1);  //处理串口1数据，
     mem_clear(USART1_RX_BUF,UART_RX_LEN);
     MYDMA_Enable(DMA1_Channel5);
     break;

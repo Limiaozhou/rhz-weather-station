@@ -11,14 +11,16 @@ typedef struct
     float magnetic;//电磁阀加料
     float blender;  //搅拌机
     float insecticide; //杀虫
-    float ventilate; //通风
+    float ventilate; //通风，风机
     float light;   //补光
     float high_wat; //高水位
     float low_wat;  //低水位
-    float yang;  //遮阳
+    float yang;  //遮阳1，内
     float con;  //手动
     float wat4;  //水帘
     float video;  //视频
+    float juanmo;  //卷膜
+    float yang1;  //遮阳2，外
 }WAT_FER;
 
 

@@ -422,7 +422,7 @@ unsigned char yang_off[7]= {0X55,0XFE,0XFE,0X03,0X02,0XF9,0X25};
 extern char wifi_flag;
 
 /*
-wifi2接收服务器返回的指令，并处理分析 
+wifi2接收服务器返回的指令，并处理分析，接收帧头（2字节）、长度（1）、加密标志（1）、硬件编号（8），共12字节头判断
 15:14 2018/10/12
 LK
 */
@@ -431,8 +431,8 @@ void Deal_Uart(unsigned char *uart_data,int len,int flag1)
   int i=0;
   int j=0;
   int flag =0;
-  float shadedat = 0;
-  unsigned char addr[8] = { 0x4f,0x45,0x41,0x00,0x00,0x0E,0x00,0x00 };//小棚电机独立控制
+//  float shadedat = 0;
+//  unsigned char addr[8] = { 0x4f,0x45,0x41,0x00,0x00,0x0E,0x00,0x00 };//小棚电机独立控制
 //  unsigned char rece[UART_RX_LEN]={0};
 //  char a=0,num;
   unsigned char dat[4]={0};
@@ -449,12 +449,12 @@ void Deal_Uart(unsigned char *uart_data,int len,int flag1)
     
     //首个字节为0，退出循环
     IWDG_Feed();
-    if((*(uart_data+i)==0)) 
-      break;
+//    if((*(uart_data+i)==0)) 
+//      break;
     if(i>=len)
       break;
     
-    if(*(uart_data+i)==0x55 && *(uart_data+i+1)==0xAA &&uart_data[2+i]>=2)//未收到更新命令。普通命令的处理，包括配置命令，更新准备命令
+    if(*(uart_data+i)==0x55 && *(uart_data+i+1)==0xAA &&uart_data[2+i]>=2)//帧头校验，长度校验大于2
     {
       /*收到服务器发来打开遮阳，发送485打开命令，*/
  //     FromUartToSD2HAO(uart_data,len);
@@ -464,14 +464,14 @@ void Deal_Uart(unsigned char *uart_data,int len,int flag1)
 //       UART4->DR= i;
 //           while((UART4->SR&0X40)==0);//等待发送结束
 //       USART_Puts(UART4, &uart_data[4+i],uart_data[2+i]-3);//debug
-       if(Check_CheckCRC16(&uart_data[3+i],uart_data[2+i]-2))
+       if(Check_CheckCRC16(&uart_data[3+i],uart_data[2+i]-2))  //CRC校验
        {
-         if(*(uart_data+3+i)>=100)
+         if(*(uart_data+3+i)>=100)  //buf[3]为是否加密标志，大于100为加密，需解密
          {
-           btea_decrpyt(&uart_data[4+i],uart_data[2+i]-3);
+           btea_decrpyt(&uart_data[4+i],uart_data[2+i]-3);  //数据解密
          }
           
-//         USART_Puts(UART4, &uart_data[4+i],uart_data[2+i]-3);//debug
+         USART_Puts(UART4, &uart_data[i], uart_data[2+i]+3);//debug
          j=*(uart_data+2+i)+i-11;
 //         if(((memcmp(&uart_data[i+4], addr, 8)) || (memcmp(&uart_data[i+4],bro_addr,8))))
 //         {
@@ -486,49 +486,68 @@ void Deal_Uart(unsigned char *uart_data,int len,int flag1)
 //         USART_Puts(UART4, (unsigned char *)uart_data+i+12, 7);//debug
 //         while(1)
 //         {
-           if(i>=j)
+           if(i>=j)  //数据长度小于11直接退出
              break;
           
-           switch(*(uart_data+i+12))
+           switch(*(uart_data+i+12))  //数据位帧头判断
            {
-      
                case 0xB3: 
-                   USART_Puts(UART4, (unsigned char *)uart_data+i+12, 7);//debug
-                  if((*(uart_data+i+13) == 0x01)&& (*(uart_data+i+14) == 0x44)) //shade
+//                   USART_Puts(UART4, (unsigned char *)uart_data+i+12, 7);//debug
+                  if((*(uart_data+i+13) == 0x00) && (*(uart_data+i+14) == 0x01))  //风机
                   {
-                    mem_copy(dat, uart_data+i+15,4);
-                    shadedat=chartofloat(dat); 
+                    mem_copy(dat, uart_data+i+15, 4);
+                    wat_fer.ventilate = chartofloat(dat);
                   }
-                  if((int)(shadedat) == 1)
+                  else if((*(uart_data+i+13) == 0x00) && (*(uart_data+i+14) == 0x03))  //卷膜
                   {
-//                        USART_Puts(UART4, (unsigned char *)uart_data+i+12, 7);//debug
-                    USART_Puts(USART3, yang_on, 7);//debug
-                    USART_Puts(UART4, yang_on, 5);//debug
-                    delay_ms(100);
-                    
-                    
+                    mem_copy(dat, uart_data+i+15, 4);
+                    wat_fer.juanmo = chartofloat(dat);
                   }
-                  if((int)(shadedat) == 0)
+                  else if((*(uart_data+i+13) == 0x00) && (*(uart_data+i+14) == 0x05))  //水帘
                   {
-          
-                    USART_Puts(USART3, yang_off, 7);//debug
-                    USART_Puts(UART4, yang_off, 5);//debug
-                    delay_ms(100);
-                    send();	//发送数据
-                    
+                    mem_copy(dat, uart_data+i+15, 4);
+                    wat_fer.wat4 = chartofloat(dat);
                   }
-              
+                  else if((*(uart_data+i+13) == 0x00) && (*(uart_data+i+14) == 0x07))  //内，遮阳1
+                  {
+                    mem_copy(dat, uart_data+i+15, 4);
+                    wat_fer.yang = chartofloat(dat);
+                  }
+                  else if((*(uart_data+i+13) == 0x00) && (*(uart_data+i+14) == 0x09))  //外，遮阳2
+                  {
+                    mem_copy(dat, uart_data+i+15, 4);
+                    wat_fer.yang1 = chartofloat(dat);
+                  }
+                  
+                  send();	//发送数据到服务器
+                  
+//                  if((int)(shadedat) == 1)
+//                  {
+////                        USART_Puts(UART4, (unsigned char *)uart_data+i+12, 7);//debug
+//                    USART_Puts(USART3, yang_on, 7);//debug
+//                    USART_Puts(UART4, yang_on, 5);//debug
+//                    delay_ms(100);
+//                    
+//                    
+//                  }
+//                  if((int)(shadedat) == 0)
+//                  {
+//          
+//                    USART_Puts(USART3, yang_off, 7);//debug
+//                    USART_Puts(UART4, yang_off, 5);//debug
+//                    delay_ms(100);
+//                    send();	//发送数据
+//                    
+//                  }
+//              
                     break;
             
                  default:
                     break;
              }
-       }                 
-
+       }
     }
- 
       i++;
-    
   }//end while
   // if(i&&flag1&&flag) 
   // {

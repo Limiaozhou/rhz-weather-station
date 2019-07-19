@@ -46,8 +46,8 @@ void float_to_str(uchar *pbuf,float num,char count)
 int cunt1 = 0;
 void main()
 {
-  Clock_Init();             
-  Init_Timer4(); 
+  Clock_Init();  //HSI-16MHz
+  Init_Timer4();  //T = 2.048ms
   Init_Timer2();
   
   asm("rim");//开全局中断 asm("rim");//开中断，sim为关中断

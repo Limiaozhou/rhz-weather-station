@@ -19,7 +19,7 @@ typedef struct
 typedef struct
 {
   unsigned char cmd; //
-  unsigned char len; //data  关键字
+  unsigned char len; //长度，数据字节数，6 * n
 
 //  ST_ITEM shade;
 //    ST_ITEM co2;  
@@ -34,17 +34,23 @@ typedef struct
 //    ST_ITEM so2;  //so2
 //    ST_ITEM pressure;  //气压
     ST_ITEM yuxue;  //是否有雨雪
+    
+    ST_ITEM ventilate;  //风机
+    ST_ITEM juanmo;  //卷膜
+    ST_ITEM wat4;  //水帘
+    ST_ITEM yang;  //内，遮阳1
+    ST_ITEM yang1;  //外，遮阳2
 }DATA;
 //要发送的数据结构体
 typedef struct
 {
-	short int head;  //
-	unsigned char len;   //
-	char ver;   //
-	unsigned char addr[8]; // device code
-	DATA data;     //传感器数据
-	char fill[2];
-	short int crc16;     //crc16
+	short int head;  //2，帧头
+	unsigned char len;   //1，长度，后面字节数，不包括本字节
+	char ver;   //1，数据是否加密标志位
+	unsigned char addr[8]; // device code,8，设备地址
+	DATA data;     //传感器数据,2 + 6 * n
+	char fill[2];  //2
+	short int crc16;     //crc16,2，从ver开始校验
 }ST_EVNBALEDAT;
 extern ST_EVNBALEDAT *psenddat;
 /******************@DESCRIPTION: -- 检测环境参数类别名称*************/

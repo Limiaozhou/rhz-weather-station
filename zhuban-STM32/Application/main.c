@@ -252,20 +252,20 @@ int main()
 
   while(1)
   {
-    if(Ana_Flag)            
+    if(Ana_Flag)  //200ms¼ä¸ô
     {
       Ana_Flag = 0;
       IWDG_Feed();
 
-//      if(DMA_Usart_Receive(1))//wifi2 uart1
-//      {
-////        USART_Puts(UART4,"DMA_Usart_Receive",strlen("DMA_Usart_Receive"));
-//        GenericApp_package_Deal(1);
-//      }
+      if(DMA_Usart_Receive(1))//wifi2 uart1
+      {
+//        USART_Puts(UART4,"DMA_Usart_Receive",strlen("DMA_Usart_Receive"));
+        GenericApp_package_Deal(1);
+      }
 //      USART_Puts(UART4,"485recv",strlen("485recv"));
       if(DMA_Usart_Receive(3))
       {
-        GenericApp_package_Deal(3);  //get_RTU_data
+        GenericApp_package_Deal(3);  //get_RTU_data£¬485
       }
 
       if(send_flag)  //10s

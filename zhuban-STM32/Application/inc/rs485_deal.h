@@ -128,7 +128,7 @@ typedef struct
 }Cmd_send;
 
 extern float LIGHT_DATA ;
-extern WAT_FER wat_fer;
+extern WAT_FER wat_fer;  //水肥等控制设备结构体
 extern void Generate_485_addr();
 //extern void send_read_RTU(unsigned char *send,unsigned char Oper_code, unsigned char addr,unsigned char len);
 extern void set_RTU_addr(unsigned char *send, unsigned char oldAddr, unsigned char newAddr);

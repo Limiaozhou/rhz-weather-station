@@ -584,7 +584,7 @@ void send_Cmd()
 //    while (!(UART4->SR & 0x80));//等待发送寄存器为空,(否则连续发送时数据易丢失 )
 //		UART4->DR = num_count;//发送数据
 	USART_Puts(USART3, send_data.cmd, len);
-    USART_Puts(UART4, send_data.cmd, len);  //debug
+//    USART_Puts(UART4, send_data.cmd, len);  //debug
 	delay_ms(100);
 
   
