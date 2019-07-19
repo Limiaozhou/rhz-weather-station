@@ -20,8 +20,8 @@ void Init_Timer2(void)
   TIM2_PSCR=0x00;  //HSI,16M ,1/16us，也就是说计数器会每隔1/16us计数一次。
  // TIM2_ARRH=0x3E;       //自动重装的值 0x3e7e =16000;Fpwm=16000000/16000=10000HZ
 //  TIM2_ARRL=0x80; 
-  TIM2_ARRH=0x06;       //自动重装的值 0x3e7e =1600;Fpwm=16000000/1600=10000HZ
-  TIM2_ARRL=0x40;
+  TIM2_ARRH=0x06;       //自动重装的值 0x0640 =1600;Fpwm=16000000/1600=10000HZ=10KHz
+  TIM2_ARRL=0x40;  //T=0.1ms
   TIM2_CCER1=bit0|bit1; //捕获发生在下降沿,OC1
   TIM2_CCMR1=bit3|bit5|bit6;  //cc1通道被配置为输出，禁止TIMx_CCR1寄存器的预装载功能，
   //可随时写入CCR1寄存器且写入的数值立即起作用。PW1模式：CNT<CCR,CH1被激活
@@ -55,7 +55,7 @@ int time2 = 0;
 int time3 = 0;
 //char water12 = 0;
 #pragma vector=TIM4_OVR_UIF_vector//0x19
-__interrupt void TIM4_OVR_UIF_IRQHandler(void)//对应IAP的中断地址：0x8060 1s中断490
+__interrupt void TIM4_OVR_UIF_IRQHandler(void)//对应IAP的中断地址：0x8060 2.048ms中断
 {
   collect_time++;
   

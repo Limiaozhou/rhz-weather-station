@@ -48,7 +48,7 @@ void main()
 {
   Clock_Init();  //HSI-16MHz
   Init_Timer4();  //T = 2.048ms
-  Init_Timer2();
+  Init_Timer2();  //T=0.1ms
   
   asm("rim");//开全局中断 asm("rim");//开中断，sim为关中断
  // mem_clear((unsigned char*)&Evndat,sizeof(Evndat));
@@ -89,9 +89,9 @@ void main()
   WAT.water1time = Flash_data[2] ;
   WAT.water2time = Flash_data[3];
   WAT.valve4flow = Flash_data[4];
-  struct_init();
-  io_init();
-  pwm_off();
+  struct_init();  //WAT结构体数据water1、water1初始为0
+  io_init();  //继电器控制引脚
+//  pwm_off();
   
   /*if(Flash_data[3]<6)
     UART_Init(Flash_data[3]);                       //初始化串口 
@@ -107,32 +107,32 @@ void main()
         break;
     }
   }*/
-  UART_Init(1); 
+  UART_Init(1);  //9600
  // get_data();             //获取传感器采集的值            
  // IWDG_init();
   while (1)
-  { 
-    if(collect_time%10 == 0)  //20ms
+  {
+    if(collect_time%10 == 0)  //20.48ms
     {
-      control();
-      io_control(); 
+//      control();  //设备控制引脚标志位赋值
+      io_control();  //引脚控制
   //  delay_ms(1000);
   //  UART_Send("1245678",4);
  //   if(collect_time > )
      
-      if(collect_time>5000)//5秒钟(2450)读一次数据    主动上传一次数据
-      {
-        collect_time = 0;
-          wat_data();
-      }
-       if(read485 == 1)
-      {
-        read485 = 0;
-        delay_ms(200);
-        wat_data();   //发送数据
+//      if(collect_time>5000)//10.24s
+//      {
+//        collect_time = 0;
+//          wat_data();  //串口发送数据
+//      }
+//       if(read485 == 1)
+//      {
+//        read485 = 0;
+//        delay_ms(200);
+//        wat_data();   //串口发送数据
         
  //       collect_time = 0;
-      }
+//      }
     }
   }
 }

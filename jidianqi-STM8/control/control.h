@@ -3,10 +3,11 @@
 
 #include"iostm8s103F3.h"
 
-#define valve1io PC_ODR_ODR4
-#define valve2io PC_ODR_ODR5
-#define valve3io PC_ODR_ODR6
-#define valve5io PC_ODR_ODR7
+#define valve1io PC_ODR_ODR7  //PC7ㄛ導PC4
+#define valve2io PC_ODR_ODR6  //PC6ㄛ導PC5
+#define valve3io PC_ODR_ODR4  //PC4ㄛ導PC6
+#define valve4io PC_ODR_ODR5  //PC5
+#define valve5io PA_ODR_ODR3  //PA3ㄛ導PC7
 typedef struct
 {
   float water1 ;

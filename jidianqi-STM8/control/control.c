@@ -16,6 +16,8 @@ CON  WAT;
 #define valve2_L()  valve2io = 0
 #define valve3_H()  valve3io = 1
 #define valve3_L()  valve3io = 0
+#define valve4_H()  valve4io = 1
+#define valve4_L()  valve4io = 0
 #define valve5_H()  valve5io = 1
 #define valve5_L()  valve5io = 0
 
@@ -31,26 +33,31 @@ void struct_init(void)
 }
 void io_init(void)
 {
-  PC_DDR|=0x10;//PB4
+  PC_DDR|=0x10;//PC4，输出
   PC_CR1|=0x10;//推挽输出
-  PC_CR2&=0xEF;  //2M输出 
+  PC_CR2 &= ~0x10;  //2M输出 
   
   PC_DDR|=0x20;//PC5
   PC_CR1|=0x20;//推挽输出
-  PC_CR2&=0xEF;  //2M输出 
+  PC_CR2 &= ~0x20;  //2M输出 
   
-  PC_DDR|=0x40;//PB6
+  PC_DDR|=0x40;//PC6
   PC_CR1|=0x40;//推挽输出
-  PC_CR2&=0xEF;  //2M输出 
+  PC_CR2 &= ~0x40;  //2M输出 
   
-  PC_DDR|=0x80;//PB7
+  PC_DDR|=0x80;//PC7
   PC_CR1|=0x80;//推挽输出
-  PC_CR2&=0xEF;  //2M输出 
+  PC_CR2 &= ~0x80;  //2M输出
+  
+  PA_DDR|=0x08;//PA3
+  PA_CR1|=0x08;//推挽输出
+  PA_CR2 &= ~0x08;  //2M输出
   
   //all relays off
-  valve2_L();
   valve1_L();
+  valve2_L();
   valve3_L();
+  valve4_L();
   valve5_L();
 }
 
@@ -130,12 +137,11 @@ void io_control(void)
   }
   if(valve4 == 1)//Stiring on
   {
- //   valve1_H();
-    pwm_on();
+    valve4_H();//水开
   }
   else
   {
-    pwm_off();
+    valve4_L();//水关
   }
   if(valve5 == 1)
   {
