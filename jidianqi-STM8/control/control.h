@@ -1,0 +1,34 @@
+#ifndef _control_H_
+#define _control_
+
+#include"iostm8s103F3.h"
+
+#define valve1io PC_ODR_ODR4
+#define valve2io PC_ODR_ODR5
+#define valve3io PC_ODR_ODR6
+#define valve5io PC_ODR_ODR7
+typedef struct
+{
+  float water1 ;
+  float water2 ;
+  float water1time ;
+  float water2time ;
+  float valve4flow ;
+  float time;
+}CON;
+extern char valve1 ;
+extern char valve2 ;
+extern char valve3 ;
+extern char valve4 ;
+extern char valve5 ;
+extern char read485;
+extern CON  WAT;
+
+void struct_init(void);
+void io_init(void);
+void control(void);
+void io_control(void);
+void wat_data(void);
+void pwm_on(void);
+void pwm_off(void);
+#endif
