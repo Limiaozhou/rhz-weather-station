@@ -52,6 +52,9 @@ char blender_flag = 0;
 char hmi_send_flag = 0;  //屏幕发送标志位
 char hmi_send_cnt = 0;  //屏幕发送计时
 
+char relay_send_flag = 0;  //继电器板发送标志位
+char relay_send_cnt = 0;  //继电器板发送计时
+
 void TIM4_IRQHandler(void)
 { 		    		  			    
   if(TIM4->SR&0X0001)//溢出中断(200ms)
@@ -124,6 +127,12 @@ void TIM4_IRQHandler(void)
     {
       hmi_send_flag = 1;
       hmi_send_cnt = 0;
+    }
+    
+    if(relay_send_cnt++ >= 25)  //5s
+    {
+      relay_send_flag = 1;
+      relay_send_cnt = 0;
     }
   }				   
   TIM4->SR&=~(1<<0);//清除中断标志位 	    time3_cnt++;

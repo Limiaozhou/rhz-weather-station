@@ -18,6 +18,7 @@
 #include "wdg.h"
 #include "wat_fer.h"
 
+#include "relay_board.h"
 
 ////////////////////////////////////////////////////////////////////////////////// 
 //更新及配置操作
@@ -520,6 +521,8 @@ void Deal_Uart(unsigned char *uart_data,int len,int flag1)
                   }
                   
                   send();	//发送数据到服务器
+                  
+                  relay_board_control();  //发送控制继电器板命令
                   
 //                  if((int)(shadedat) == 1)
 //                  {

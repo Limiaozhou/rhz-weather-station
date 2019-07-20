@@ -32,6 +32,7 @@
 #include "rs485_deal.h"
 
 #include "hmi.h"
+#include "relay_board.h"
 
 ////////////////////////////////////////////////////////////////////////////////// 
 //主函数
@@ -283,6 +284,12 @@ int main()
       {
         hmi_send_flag = 0;
         hmi_send();  //发送屏幕数据
+      }
+
+      if(relay_send_flag)  //5s
+      {
+        relay_send_flag = 0;
+        relay_board_control();  //发送控制继电器板命令
       }
     }
   }
