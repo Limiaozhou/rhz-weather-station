@@ -9,13 +9,15 @@
 #include "eeprom.h"
 #include <math.h>
 #include "stdio.h"
-#define   RXBUFSIZE     20                   
+
 
 //extern unsigned char open_pump[6];
-static char Rxbuf[RXBUFSIZE];
+char Rxbuf[RXBUFSIZE];
 char pos = 0;
 short int uart1_clear_cunt=0;
 unsigned char send[50];
+
+unsigned char rx_flag;  //串口接收完成标志位
 
 //extern ST_Config config;
 //unsigned char zeor_cmp[8]={0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
@@ -68,7 +70,7 @@ void UART_Init(int baud)
 
   UART1_CR2=0x2c;//允许接收，发送，开接收中断
   //UART1_CR2|=(0x01<<5);//允许接收，发送，开接收中断
-  
+  UART1_CR2 |= 0x10;  //ILIEN，接收空闲中断使能，SR:IDLE
 }
 
 void UART_Send(unsigned char *pbuf, unsigned char len)
@@ -94,34 +96,47 @@ void UART_Clear(void)
 #pragma vector= UART1_R_OR_vector//0x19
 __interrupt void UART1_R_OR_IRQHandler(void)
 {
-  char lon = 0;
-  char data;
- // if(UART1_SR_FE || UART1_SR_OR_LHE)  data = UART1_DR;
- // else if(UART1_SR_RXNE||pos<RXBUFSIZE)  
-  {  
+  unsigned char data = 0;  //数据缓存
+  
+  if(UART1_SR_RXNE)  //接收标志位
+  {
     data = UART1_DR;
-    if(data == 0x8A)
-    {
-      Rxbuf[0] = 0x8A;
-      
-    }
-    if(pos<RXBUFSIZE && Rxbuf[0] == 0x8A)  
-      Rxbuf[pos++]=data;
+    Rxbuf[pos++]=data;
   }
- // else data = UART1_DR;
-  if(pos == 4 && (Rxbuf[1] == 0xB3 || Rxbuf[1] == 0xB4))
+  if(UART1_SR_IDLE)  //空闲标志位
   {
-    lon = Rxbuf[2];
+    data = UART1_SR;
+    data = UART1_DR;  //顺序读完后，清0空闲IDLE标志位
+    rx_flag = 1;  //接收一帧完成
   }
-  if(pos>=11)
-  {
-    if(pos>=lon+5)//485
-    {
-      pro485(Rxbuf);
- //   UART_Send(Rxbuf,11);
-      UART_Clear();
-    }
-  }
-  uart1_clear_cunt=0;
-  return;
+//  char lon = 0;
+//  char data;
+// // if(UART1_SR_FE || UART1_SR_OR_LHE)  data = UART1_DR;
+// // else if(UART1_SR_RXNE||pos<RXBUFSIZE)  
+//  {  
+//    data = UART1_DR;
+//    if(data == 0x8A)
+//    {
+//      Rxbuf[0] = 0x8A;
+//      
+//    }
+//    if(pos<RXBUFSIZE && Rxbuf[0] == 0x8A)  
+//      Rxbuf[pos++]=data;
+//  }
+// // else data = UART1_DR;
+//  if(pos == 4 && (Rxbuf[1] == 0xB3 || Rxbuf[1] == 0xB4))
+//  {
+//    lon = Rxbuf[2];
+//  }
+//  if(pos>=11)
+//  {
+//    if(pos>=lon+5)//485
+//    {
+//      pro485(Rxbuf);
+// //   UART_Send(Rxbuf,11);
+//      UART_Clear();
+//    }
+//  }
+//  uart1_clear_cunt=0;
+//  return;
 }

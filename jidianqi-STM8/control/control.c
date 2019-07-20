@@ -10,15 +10,15 @@ char valve4 =  0;
 char valve5 =  0;
 char read485 = 0;
 CON  WAT;
-#define valve1_H()  valve1io = 1
-#define valve1_L()  valve1io = 0
-#define valve2_H()  valve2io = 1
-#define valve2_L()  valve2io = 0
-#define valve3_H()  valve3io = 1
-#define valve3_L()  valve3io = 0
-#define valve4_H()  valve4io = 1
-#define valve4_L()  valve4io = 0
-#define valve5_H()  valve5io = 1
+#define valve1_H()  valve4io = 1  //RJ1
+#define valve1_L()  valve4io = 0
+#define valve2_H()  valve3io = 1  //RJ2
+#define valve2_L()  valve3io = 0
+#define valve3_H()  valve2io = 1  //RJ3
+#define valve3_L()  valve2io = 0
+#define valve4_H()  valve1io = 1  //RJ4
+#define valve4_L()  valve1io = 0
+#define valve5_H()  valve5io = 1  //RJ5
 #define valve5_L()  valve5io = 0
 
 extern char Flash_data[4];
@@ -113,43 +113,47 @@ void io_control(void)
 {
   if(valve1 == 1)
   {
-    valve1_H();//总阀开
+    valve1_H();  //P1开
   }
   else
   {
-    valve1_L();//总阀开
+    valve1_L();
   }
+  
   if(valve2 == 1)
   {
-    valve2_H(); //肥开
+    valve2_H(); //P2开
   }
   else
   {
-    valve2_L();//肥关
+    valve2_L();
   }
+  
   if(valve3 == 1)
   {
-    valve3_H();//水开
+    valve3_H();  //P3开
   }
   else
   {
-    valve3_L();//水关
+    valve3_L();
   }
-  if(valve4 == 1)//Stiring on
+  
+  if(valve4 == 1)
   {
-    valve4_H();//水开
+    valve4_H();  //P4开
   }
   else
   {
-    valve4_L();//水关
+    valve4_L();
   }
+  
   if(valve5 == 1)
   {
-    valve5_H();//水泵开
+    valve5_H();  //P5开
   }
   else
   {
-    valve5_L();//水泵关
+    valve5_L();
   }
 }
 

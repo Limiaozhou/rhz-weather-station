@@ -35,7 +35,7 @@ typedef union
 *
 *@Return: --float
 ****************************************/	
-float chartofloat(uchar *pdat)
+float chartofloat(unsigned char *pdat)
 {
   Float4Byte temp;
   
