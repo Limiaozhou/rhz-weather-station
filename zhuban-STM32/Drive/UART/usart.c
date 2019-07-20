@@ -21,6 +21,9 @@
 #include "wifi.h"
 
 #include "stm32f10x_usart.h"
+
+#include "hmi.h"
+
 extern void IWDG_Feed(void);
 
 
@@ -232,6 +235,7 @@ void GenericApp_package_Deal(unsigned char Num)
     MYDMA_Enable(DMA1_Channel5);
     break;
   case 2:
+    hmi_read(USART2_RX_BUF,UART_RX_LEN-MYDMA_GetCurrDataCounter(DMA1_Channel6));
     mem_clear(USART2_RX_BUF,UART_RX_LEN);
     MYDMA_Enable(DMA1_Channel6);
     break;

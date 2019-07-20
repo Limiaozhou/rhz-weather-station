@@ -33,6 +33,14 @@ void uart1_read_deal(unsigned char *pdata, unsigned char len)
                     valve3 = 1;
                 else
                     valve3 = 0;
+                if(data & 0x08)
+                    valve4 = 1;
+                else
+                    valve4 = 0;
+                if(data & 0x10)
+                    valve5 = 1;
+                else
+                    valve5 = 0;
             }
 //            if((pdata[i+9] == 0x00) && (pdata[i+10] == 0x03))  //设备2，按设备数据是否为1控制继电器
 //            {

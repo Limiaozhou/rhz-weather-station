@@ -264,6 +264,11 @@ int main()
         GenericApp_package_Deal(1);
       }
 //      USART_Puts(UART4,"485recv",strlen("485recv"));
+      if(DMA_Usart_Receive(2))
+      {
+        GenericApp_package_Deal(2);  //获取屏幕串口数据
+      }
+      
       if(DMA_Usart_Receive(3))
       {
         GenericApp_package_Deal(3);  //get_RTU_data，485
