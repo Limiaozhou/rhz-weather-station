@@ -21,43 +21,51 @@ void uart1_read_deal(unsigned char *pdata, unsigned char len)
             if((pdata[i+3] == 0x00) && (pdata[i+4] == 0x01))  //设备1
             {
                 data = (int)chartofloat(pdata + i + 5);
-                if(data & 0x01)
+                if(data & 0x01)  //按数据的位控制继电器
                     valve1 = 1;
                 else
                     valve1 = 0;
-            }
-            if((pdata[i+9] == 0x00) && (pdata[i+10] == 0x03))  //设备2
-            {
-                data = (int)chartofloat(pdata + i + 11);
-                if(data & 0x01)
+                if(data & 0x02)
                     valve2 = 1;
                 else
                     valve2 = 0;
-            }
-            if((pdata[i+15] == 0x00) && (pdata[i+16] == 0x05))  //设备3
-            {
-                data = (int)chartofloat(pdata + i + 17);
-                if(data & 0x01)
+                if(data & 0x04)
                     valve3 = 1;
                 else
                     valve3 = 0;
             }
-            if((pdata[i+21] == 0x00) && (pdata[i+22] == 0x07))  //设备4
-            {
-                data = (int)chartofloat(pdata + i + 23);
-                if(data & 0x01)
-                    valve4 = 1;
-                else
-                    valve4 = 0;
-            }
-            if((pdata[i+27] == 0x00) && (pdata[i+28] == 0x09))  //设备5
-            {
-                data = (int)chartofloat(pdata + i + 29);
-                if(data & 0x01)
-                    valve5 = 1;
-                else
-                    valve5 = 0;
-            }
+//            if((pdata[i+9] == 0x00) && (pdata[i+10] == 0x03))  //设备2，按设备数据是否为1控制继电器
+//            {
+//                data = (int)chartofloat(pdata + i + 11);
+//                if(data & 0x01)
+//                    valve2 = 1;
+//                else
+//                    valve2 = 0;
+//            }
+//            if((pdata[i+15] == 0x00) && (pdata[i+16] == 0x05))  //设备3
+//            {
+//                data = (int)chartofloat(pdata + i + 17);
+//                if(data & 0x01)
+//                    valve3 = 1;
+//                else
+//                    valve3 = 0;
+//            }
+//            if((pdata[i+21] == 0x00) && (pdata[i+22] == 0x07))  //设备4
+//            {
+//                data = (int)chartofloat(pdata + i + 23);
+//                if(data & 0x01)
+//                    valve4 = 1;
+//                else
+//                    valve4 = 0;
+//            }
+//            if((pdata[i+27] == 0x00) && (pdata[i+28] == 0x09))  //设备5
+//            {
+//                data = (int)chartofloat(pdata + i + 29);
+//                if(data & 0x01)
+//                    valve5 = 1;
+//                else
+//                    valve5 = 0;
+//            }
         }
     }
 	
