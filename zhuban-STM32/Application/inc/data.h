@@ -29,11 +29,11 @@ typedef struct
     ST_ITEM light; 
     ST_ITEM humi;
 //    ST_ITEM tvoc;
-    ST_ITEM fx;  //风向
-    ST_ITEM fs;  //风速
+//    ST_ITEM fx;  //风向
+//    ST_ITEM fs;  //风速
 //    ST_ITEM so2;  //so2
 //    ST_ITEM pressure;  //气压
-    ST_ITEM yuxue;  //是否有雨雪
+//    ST_ITEM yuxue;  //是否有雨雪
     
     ST_ITEM ventilate;  //风机
     ST_ITEM juanmo;  //卷膜

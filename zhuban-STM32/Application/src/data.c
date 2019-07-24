@@ -115,12 +115,12 @@ void Evn_Packagedat()
     /*十进制21，  21+3；
     6x(x是传感器类型psenddat->data.len )+2个crc16+2个tea+2个cmdlen+8个地址code+4个头长版本-3
     （从第三个开始不含第三个）；15+6x*/
-	psenddat->len = 15+6*11;
+	psenddat->len = 15+6*8;
 
 	psenddat->ver = 38;
 	mem_copy(psenddat->addr, addr, 8);
 	psenddat->data.cmd = 0xD0;
-	psenddat->data.len = 6*11;//十进制6,多少种检测参数，一种6字节
+	psenddat->data.len = 6*8;//十进制6,多少种检测参数，一种6字节
 
 //	psenddat->data.shade.key[0] = 0x01;
 //	psenddat->data.shade.key[1] = 0x44; // 小棚遮阳服务器上的地址
@@ -153,13 +153,13 @@ void Evn_Packagedat()
 //	psenddat->data.tvoc.key[1] = 0x7C; //TVOC
 //	mem_copy(psenddat->data.tvoc.dat, (unsigned char*)&(sensor.tvoc), 4);
     
-    psenddat->data.fx.key[0] = 0x00;
-	psenddat->data.fx.key[1] = 0x04; //风向
-	mem_copy(psenddat->data.fx.dat, (unsigned char*)&(sensor.fx), 4);
-    
-    psenddat->data.fs.key[0] = 0x00;
-	psenddat->data.fs.key[1] = 0x02; //风速
-	mem_copy(psenddat->data.fs.dat, (unsigned char*)&(sensor.fs), 4);
+//    psenddat->data.fx.key[0] = 0x00;
+//	psenddat->data.fx.key[1] = 0x04; //风向
+//	mem_copy(psenddat->data.fx.dat, (unsigned char*)&(sensor.fx), 4);
+//    
+//    psenddat->data.fs.key[0] = 0x00;
+//	psenddat->data.fs.key[1] = 0x02; //风速
+//	mem_copy(psenddat->data.fs.dat, (unsigned char*)&(sensor.fs), 4);
     
 //    psenddat->data.so2.key[0] = 0x00;
 //	psenddat->data.so2.key[1] = 0x6E; //so2
@@ -177,9 +177,9 @@ void Evn_Packagedat()
 //	psenddat->data.pm25.key[1] = 0x68; //PM2.5
 //	mem_copy(psenddat->data.pm25.dat, (unsigned char*)&(sensor.pm25), 4);
     
-    psenddat->data.yuxue.key[0] = 0x00;
-	psenddat->data.yuxue.key[1] = 0x18; //是否有雨雪
-	mem_copy(psenddat->data.yuxue.dat, (unsigned char*)&(sensor.yuxue), 4);
+//    psenddat->data.yuxue.key[0] = 0x00;
+//	psenddat->data.yuxue.key[1] = 0x18; //是否有雨雪
+//	mem_copy(psenddat->data.yuxue.dat, (unsigned char*)&(sensor.yuxue), 4);
     
     
     psenddat->data.ventilate.key[0] = 0x00;
