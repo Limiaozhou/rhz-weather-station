@@ -138,11 +138,11 @@ void Evn_Packagedat()
 //	mem_copy(psenddat->data.co2.dat, (unsigned char*)&(sensor.co2), 4);
         
     psenddat->data.temp.key[0] = 0x00;
-	psenddat->data.temp.key[1] = 0x80; //梁業
+	psenddat->data.temp.key[1] = 0x86; //梁業
 	mem_copy(psenddat->data.temp.dat, (unsigned char*)&(sensor.temp), 4);
     
     psenddat->data.humi.key[0] = 0x00;
-	psenddat->data.humi.key[1] = 0x82; //物業
+	psenddat->data.humi.key[1] = 0x88; //物業
 	mem_copy(psenddat->data.humi.dat, (unsigned char*)&(sensor.humi), 4);
     
     psenddat->data.light.key[0] = 0x00;

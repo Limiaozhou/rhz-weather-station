@@ -6,6 +6,7 @@
 #include "data.h"
 #include "delay.h"
 #include "rs485_deal.h"
+#include "relay_board.h"
 
 void hmi_send(void);
 void hmi_read(unsigned char *uartData,unsigned char len);

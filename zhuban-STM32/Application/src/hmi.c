@@ -237,6 +237,7 @@ void hmi_read(unsigned char *uartData,unsigned char len)
           }
           
           hmi_send();
+          relay_board_control();
         }
     }
 }
