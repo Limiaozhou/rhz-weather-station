@@ -35,11 +35,11 @@ typedef struct
 //    ST_ITEM pressure;  //气压
     ST_ITEM yuxue;  //是否有雨雪
     
-    ST_ITEM ventilate;  //风机
-    ST_ITEM juanmo;  //卷膜
-    ST_ITEM wat4;  //水帘
-    ST_ITEM yang;  //内，遮阳1
-    ST_ITEM yang1;  //外，遮阳2
+//    ST_ITEM ventilate;  //风机
+//    ST_ITEM juanmo;  //卷膜
+//    ST_ITEM wat4;  //水帘
+//    ST_ITEM yang;  //内，遮阳1
+//    ST_ITEM yang1;  //外，遮阳2
 }DATA;
 //要发送的数据结构体
 typedef struct

@@ -258,16 +258,16 @@ int main()
       Ana_Flag = 0;
       IWDG_Feed();
 
-      if(DMA_Usart_Receive(1))//wifi2 uart1
-      {
-//        USART_Puts(UART4,"DMA_Usart_Receive",strlen("DMA_Usart_Receive"));
-        GenericApp_package_Deal(1);
-      }
+//      if(DMA_Usart_Receive(1))//wifi2 uart1
+//      {
+////        USART_Puts(UART4,"DMA_Usart_Receive",strlen("DMA_Usart_Receive"));
+//        GenericApp_package_Deal(1);
+//      }
 //      USART_Puts(UART4,"485recv",strlen("485recv"));
-      if(DMA_Usart_Receive(2))
-      {
-        GenericApp_package_Deal(2);  //获取屏幕串口数据
-      }
+//      if(DMA_Usart_Receive(2))
+//      {
+//        GenericApp_package_Deal(2);  //获取屏幕串口数据
+//      }
       
       if(DMA_Usart_Receive(3))
       {
@@ -285,17 +285,17 @@ int main()
         send_Cmd();	//发送485命令，读传感器
       }
       
-      if(hmi_send_flag)  //5s
-      {
-        hmi_send_flag = 0;
-        hmi_send();  //发送屏幕数据
-      }
-
-      if(relay_send_flag)  //5s
-      {
-        relay_send_flag = 0;
-        relay_board_control();  //发送控制继电器板命令
-      }
+//      if(hmi_send_flag)  //5s
+//      {
+//        hmi_send_flag = 0;
+//        hmi_send();  //发送屏幕数据
+//      }
+//
+//      if(relay_send_flag)  //5s
+//      {
+//        relay_send_flag = 0;
+//        relay_board_control();  //发送控制继电器板命令
+//      }
     }
   }
   mem_free(SRAMIN, sizeof(ST_EVNBALEDAT));

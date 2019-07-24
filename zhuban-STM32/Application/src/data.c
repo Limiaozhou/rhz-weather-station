@@ -108,19 +108,19 @@ SENSORTYPE sensor;
 void Evn_Packagedat()
 {
 //USART_Puts(UART4,"Evn_Packagedat",strlen("Evn_Packagedat"));
-	unsigned char addr[8] = { 0x4F,0x45,0x41,0x03,0x00,0x15,0x00,0x00 };
+	unsigned char addr[8] = { 0x4F,0x45,0x41,0x03,0x00,0x14,0x00,0x00 };
 
 	psenddat->head = 0xAA55;
 
     /*十进制21，  21+3；
     6x(x是传感器类型psenddat->data.len )+2个crc16+2个tea+2个cmdlen+8个地址code+4个头长版本-3
     （从第三个开始不含第三个）；15+6x*/
-	psenddat->len = 15+6*11;
+	psenddat->len = 15+6*6;
 
 	psenddat->ver = 38;
 	mem_copy(psenddat->addr, addr, 8);
 	psenddat->data.cmd = 0xD0;
-	psenddat->data.len = 6*11;//十进制6,多少种检测参数，一种6字节
+	psenddat->data.len = 6*6;//十进制6,多少种检测参数，一种6字节
 
 //	psenddat->data.shade.key[0] = 0x01;
 //	psenddat->data.shade.key[1] = 0x44; // 小棚遮阳服务器上的地址
@@ -182,25 +182,25 @@ void Evn_Packagedat()
 	mem_copy(psenddat->data.yuxue.dat, (unsigned char*)&(sensor.yuxue), 4);
     
     
-    psenddat->data.ventilate.key[0] = 0x00;
-	psenddat->data.ventilate.key[1] = 0x01; //风机
-	mem_copy(psenddat->data.ventilate.dat, (unsigned char*)&(wat_fer.ventilate), 4);
-    
-    psenddat->data.juanmo.key[0] = 0x00;
-	psenddat->data.juanmo.key[1] = 0x03; //卷膜
-	mem_copy(psenddat->data.juanmo.dat, (unsigned char*)&(wat_fer.juanmo), 4);
-    
-    psenddat->data.wat4.key[0] = 0x00;
-	psenddat->data.wat4.key[1] = 0x05; //水帘
-	mem_copy(psenddat->data.wat4.dat, (unsigned char*)&(wat_fer.wat4), 4);
-    
-    psenddat->data.yang.key[0] = 0x00;
-	psenddat->data.yang.key[1] = 0x07; //内，遮阳1
-	mem_copy(psenddat->data.yang.dat, (unsigned char*)&(wat_fer.yang), 4);
-    
-    psenddat->data.yang1.key[0] = 0x00;
-	psenddat->data.yang1.key[1] = 0x09; //外，遮阳2
-	mem_copy(psenddat->data.yang1.dat, (unsigned char*)&(wat_fer.yang1), 4);
+//    psenddat->data.ventilate.key[0] = 0x00;
+//	psenddat->data.ventilate.key[1] = 0x01; //风机
+//	mem_copy(psenddat->data.ventilate.dat, (unsigned char*)&(wat_fer.ventilate), 4);
+//    
+//    psenddat->data.juanmo.key[0] = 0x00;
+//	psenddat->data.juanmo.key[1] = 0x03; //卷膜
+//	mem_copy(psenddat->data.juanmo.dat, (unsigned char*)&(wat_fer.juanmo), 4);
+//    
+//    psenddat->data.wat4.key[0] = 0x00;
+//	psenddat->data.wat4.key[1] = 0x05; //水帘
+//	mem_copy(psenddat->data.wat4.dat, (unsigned char*)&(wat_fer.wat4), 4);
+//    
+//    psenddat->data.yang.key[0] = 0x00;
+//	psenddat->data.yang.key[1] = 0x07; //内，遮阳1
+//	mem_copy(psenddat->data.yang.dat, (unsigned char*)&(wat_fer.yang), 4);
+//    
+//    psenddat->data.yang1.key[0] = 0x00;
+//	psenddat->data.yang1.key[1] = 0x09; //外，遮阳2
+//	mem_copy(psenddat->data.yang1.dat, (unsigned char*)&(wat_fer.yang1), 4);
     
 	Check_CalaCRC16((unsigned char *)psenddat + 3, psenddat->len - 2);  //从buf[3]开始crc校验
   

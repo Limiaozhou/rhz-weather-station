@@ -355,6 +355,8 @@ void get_RTU_data(unsigned char *uartData,unsigned char len)
           if (*(uartData + i + 16) == 0x06)
           {
             sensor.light = chartofloat(uartData + i + 17);
+            if(sensor.light <= 0)  //超过量程数据会<=0
+              sensor.light = 65000;
           }
           if (*(uartData + i + 22) == 0x7A)
           {
