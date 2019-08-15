@@ -18,11 +18,11 @@ void BH1750_Write(char addr)
 //*********************************************************
 void BH1750_Read(char *pbuf)
 {   
-    char i, flag = 1; 
+    char i;//, flag = 1; 
     IIC_Start(LIGHT);                          //起始信号
     IIC_SendByte(LIGHT+1,LIGHT);         //发送设备地址+读信号
-    flag = IIC_ChkACK(LIGHT);
-    if(!flag)
+//    flag = IIC_ChkACK(LIGHT);
+//    if(!flag)
     {
         for (i=0; i<=3; i++)                   //连续读取6个地址数据，存储中BUF
         {
