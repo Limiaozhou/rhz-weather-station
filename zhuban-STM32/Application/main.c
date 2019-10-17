@@ -264,10 +264,10 @@ int main()
         GenericApp_package_Deal(1);
       }
 //      USART_Puts(UART4,"485recv",strlen("485recv"));
-      if(DMA_Usart_Receive(2))
-      {
-        GenericApp_package_Deal(2);  //获取屏幕串口数据
-      }
+//      if(DMA_Usart_Receive(2))
+//      {
+//        GenericApp_package_Deal(2);  //获取屏幕串口数据
+//      }
       
       if(DMA_Usart_Receive(3))
       {
@@ -279,17 +279,17 @@ int main()
         send();	//发送数据到服务器
         send_flag=0;
       }
-      if(send485_flag)  //2s
-      {
-        send485_flag=0;
-        send_Cmd();	//发送485命令，读传感器
-      }
+//      if(send485_flag)  //2s
+//      {
+//        send485_flag=0;
+//        send_Cmd();	//发送485命令，读传感器
+//      }
       
-      if(hmi_send_flag)  //5s
-      {
-        hmi_send_flag = 0;
-        hmi_send();  //发送屏幕数据
-      }
+//      if(hmi_send_flag)  //5s
+//      {
+//        hmi_send_flag = 0;
+//        hmi_send();  //发送屏幕数据
+//      }
 
       if(relay_send_flag)  //5s
       {
