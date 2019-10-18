@@ -454,8 +454,10 @@ void Deal_Uart(unsigned char *uart_data,int len,int flag1)
 //      break;
     if(i>=len)
       break;
+    
 //    if(*(uart_data+i)==0x55)  //测试接收串口1数据，格式55 XX
 //      wat_fer.ventilate = *(uart_data+i+1);
+    
     if(*(uart_data+i)==0x55 && *(uart_data+i+1)==0xAA &&uart_data[2+i]>=2)//帧头校验，长度校验大于2
     {
       /*收到服务器发来打开遮阳，发送485打开命令，*/
@@ -473,7 +475,7 @@ void Deal_Uart(unsigned char *uart_data,int len,int flag1)
            btea_decrpyt(&uart_data[4+i],uart_data[2+i]-3);  //数据解密
          }
           
-         USART_Puts(UART4, &uart_data[i], uart_data[2+i]+3);//debug
+//         USART_Puts(UART4, &uart_data[i], uart_data[2+i]+3);//debug
          j=*(uart_data+2+i)+i-11;
 //         if(((memcmp(&uart_data[i+4], addr, 8)) || (memcmp(&uart_data[i+4],bro_addr,8))))
 //         {
@@ -500,26 +502,26 @@ void Deal_Uart(unsigned char *uart_data,int len,int flag1)
                     mem_copy(dat, uart_data+i+15, 4);
                     wat_fer.ventilate = chartofloat(dat);
                   }
-                  else if((*(uart_data+i+13) == 0x00) && (*(uart_data+i+14) == 0x03))  //卷膜
-                  {
-                    mem_copy(dat, uart_data+i+15, 4);
-                    wat_fer.juanmo = chartofloat(dat);
-                  }
-                  else if((*(uart_data+i+13) == 0x00) && (*(uart_data+i+14) == 0x05))  //水帘
-                  {
-                    mem_copy(dat, uart_data+i+15, 4);
-                    wat_fer.wat4 = chartofloat(dat);
-                  }
-                  else if((*(uart_data+i+13) == 0x00) && (*(uart_data+i+14) == 0x07))  //内，遮阳1
-                  {
-                    mem_copy(dat, uart_data+i+15, 4);
-                    wat_fer.yang = chartofloat(dat);
-                  }
-                  else if((*(uart_data+i+13) == 0x00) && (*(uart_data+i+14) == 0x09))  //外，遮阳2
-                  {
-                    mem_copy(dat, uart_data+i+15, 4);
-                    wat_fer.yang1 = chartofloat(dat);
-                  }
+//                  else if((*(uart_data+i+13) == 0x00) && (*(uart_data+i+14) == 0x03))  //卷膜
+//                  {
+//                    mem_copy(dat, uart_data+i+15, 4);
+//                    wat_fer.juanmo = chartofloat(dat);
+//                  }
+//                  else if((*(uart_data+i+13) == 0x00) && (*(uart_data+i+14) == 0x05))  //水帘
+//                  {
+//                    mem_copy(dat, uart_data+i+15, 4);
+//                    wat_fer.wat4 = chartofloat(dat);
+//                  }
+//                  else if((*(uart_data+i+13) == 0x00) && (*(uart_data+i+14) == 0x07))  //内，遮阳1
+//                  {
+//                    mem_copy(dat, uart_data+i+15, 4);
+//                    wat_fer.yang = chartofloat(dat);
+//                  }
+//                  else if((*(uart_data+i+13) == 0x00) && (*(uart_data+i+14) == 0x09))  //外，遮阳2
+//                  {
+//                    mem_copy(dat, uart_data+i+15, 4);
+//                    wat_fer.yang1 = chartofloat(dat);
+//                  }
                   
                   send();	//发送数据到服务器
                   
