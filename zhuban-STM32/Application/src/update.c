@@ -454,7 +454,8 @@ void Deal_Uart(unsigned char *uart_data,int len,int flag1)
 //      break;
     if(i>=len)
       break;
-    
+//    if(*(uart_data+i)==0x55)  //测试接收串口1数据，格式55 XX
+//      wat_fer.ventilate = *(uart_data+i+1);
     if(*(uart_data+i)==0x55 && *(uart_data+i+1)==0xAA &&uart_data[2+i]>=2)//帧头校验，长度校验大于2
     {
       /*收到服务器发来打开遮阳，发送485打开命令，*/
