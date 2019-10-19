@@ -34,5 +34,5 @@ void relay_board_control(void)
 //  buf[28] = 0x09;  //Íâ£¬ÕÚÑô2
 //  mem_copy(&buf[29], (unsigned char*)&(wat_fer.yang1), 4);
   
-  USART_Puts(USART3, buf, len);
+  USART_Puts(UART4, buf, len);
 }

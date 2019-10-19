@@ -334,8 +334,8 @@ void UART4_init(u32 pclk2, u32 bound)
 							  //USART3->CR2|=0X200C;  //1位停止,无校验位.
 
 							  //使能接收中断
-	UART4->CR1 |= 1 << 8;    //PE中断使能
-	UART4->CR1 |= 1 << 5;    //接收缓冲区非空中断使能	    	
+//	UART4->CR1 |= 1 << 8;    //PE中断使能
+//	UART4->CR1 |= 1 << 5;    //接收缓冲区非空中断使能	    	
 	UART4->CR1 |= 1 << 13;    //1：USART模块使能						  // NVIC_Init(3,3,USART3_IRQn,2);//组2，最低优先级 
 	MY_NVIC_Init(3, 3, UART4_IRQn, 2);
 }

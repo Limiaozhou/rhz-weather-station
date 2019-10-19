@@ -12,7 +12,7 @@
 #include "wdg.h"
 
 
-#define NUM 3
+#define NUM 1
 extern INFO_485 *Flash_485;
 
 
@@ -27,7 +27,7 @@ EVNDAT Evndat;	//
 
 unsigned char sed_485_cmd[8];
 unsigned char send_485_error[6];
-const unsigned char send_code[NUM]={FS_485, FX_485, yuxue_485};
+const unsigned char send_code[NUM]={PDX_485};
  
 //RxDat rx_data;
 static char send_num=0; //发送485命令的进度
@@ -342,37 +342,37 @@ void get_RTU_data(unsigned char *uartData,unsigned char len)
   {
     if (Check_CheckCRC16(uartData + i, *(uartData + i + 2) ))
     {
-        if(len == (*(uartData + i + 2) ))
-        {
-          if (*(uartData + i + 4) == 0x80)
-          {
-            sensor.temp = chartofloat(uartData + i + 5);
-          }
-          if (*(uartData + i + 10) == 0x82)
-          {
-            sensor.humi = chartofloat(uartData + i + 11);
-          }
-          if (*(uartData + i + 16) == 0x06)
-          {
-            sensor.light = chartofloat(uartData + i + 17);
-          }
-          if (*(uartData + i + 22) == 0x7A)
-          {
-            sensor.co2 = chartofloat(uartData + i + 23);
-          }
-          if (*(uartData + i + 28) == 0x7C)
-          {
-            sensor.tvoc = chartofloat(uartData + i + 29);
-          }
-          if (*(uartData + i + 34) == 0x84)
-          {
-            sensor.pressure = chartofloat(uartData + i + 35);
-          }
-          if (*(uartData + i + 40) == 0x68)
-          {
-            sensor.pm25 = chartofloat(uartData + i + 41);
-          }
-        }
+//        if(len == (*(uartData + i + 2) ))
+//        {
+//          if (*(uartData + i + 4) == 0x80)
+//          {
+//            sensor.temp = chartofloat(uartData + i + 5);
+//          }
+//          if (*(uartData + i + 10) == 0x82)
+//          {
+//            sensor.humi = chartofloat(uartData + i + 11);
+//          }
+//          if (*(uartData + i + 16) == 0x06)
+//          {
+//            sensor.light = chartofloat(uartData + i + 17);
+//          }
+//          if (*(uartData + i + 22) == 0x7A)
+//          {
+//            sensor.co2 = chartofloat(uartData + i + 23);
+//          }
+//          if (*(uartData + i + 28) == 0x7C)
+//          {
+//            sensor.tvoc = chartofloat(uartData + i + 29);
+//          }
+//          if (*(uartData + i + 34) == 0x84)
+//          {
+//            sensor.pressure = chartofloat(uartData + i + 35);
+//          }
+//          if (*(uartData + i + 40) == 0x68)
+//          {
+//            sensor.pm25 = chartofloat(uartData + i + 41);
+//          }
+//        }
         
         break;
     }
@@ -380,46 +380,92 @@ void get_RTU_data(unsigned char *uartData,unsigned char len)
     {
       switch (rtu_data.addr)
       {
-        case FS_485 :  //精迅风速，01 03 02 00 17 F8 4A
+        case PDX_485 :  //配电箱，0A 03 18 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 1C 00 1C 00 1B 00 1C 00 20 73 79
           if(len == (*(uartData + i + 2) + 5))  //长度校验
           {
-            if((*(uartData + i + 0) == 0x01) && (*(uartData + i + 1) == 0x03))
+            if((*(uartData + i + 0) == 0x0A) && (*(uartData + i + 1) == 0x03))
             {  //头和功能码校验
-              sensor.fs = *(uartData + i + 3) << 8;
-              sensor.fs += *(uartData + i + 4);
+              sensor.UA = *(uartData + i + 3) << 8;
+              sensor.UA += *(uartData + i + 4);
               
-              sensor.fs = sensor.fs / 10;
+              sensor.UB = *(uartData + i + 5) << 8;
+              sensor.UB += *(uartData + i + 6);
+              
+              sensor.UC = *(uartData + i + 7) << 8;
+              sensor.UC += *(uartData + i + 8);
+              
+              sensor.IA = *(uartData + i + 9) << 8;
+              sensor.IA += *(uartData + i + 10);
+              
+              sensor.IB = *(uartData + i + 11) << 8;
+              sensor.IB += *(uartData + i + 12);
+              
+              sensor.IC = *(uartData + i + 13) << 8;
+              sensor.IC += *(uartData + i + 14);
+              
+              sensor.IL = *(uartData + i + 15) << 8;
+              sensor.IL += *(uartData + i + 16);
+              
+              sensor.TA = *(uartData + i + 17) << 8;
+              sensor.TA += *(uartData + i + 18);
+              
+              sensor.TB = *(uartData + i + 19) << 8;
+              sensor.TB += *(uartData + i + 20);
+              
+              sensor.TC = *(uartData + i + 21) << 8;
+              sensor.TC += *(uartData + i + 22);
+              
+              sensor.TN = *(uartData + i + 23) << 8;
+              sensor.TN += *(uartData + i + 24);
+              
+              sensor.TE = *(uartData + i + 25) << 8;
+              sensor.TE += *(uartData + i + 26);
               
               rtu_num_plus();
             }
           }
         break;
         
-        case FX_485 :  //精迅风向，02 03 02 00 0F BC 40
-          if(len == (*(uartData + i + 2) + 5))  //长度校验
-          {
-            if((*(uartData + i + 0) == 0x02) && (*(uartData + i + 1) == 0x03))
-            {  //头和功能码校验
-              sensor.fx = *(uartData + i + 3) << 8;
-              sensor.fx += *(uartData + i + 4);
-              
-              rtu_num_plus();
-            }
-          }
-        break;
-        
-        case yuxue_485 :  //精迅雨雪，03 03 00 10 00 01 84 2D
-          if(len == (*(uartData + i + 2) + 5))  //长度校验
-          {
-            if((*(uartData + i + 0) == 0x03) && (*(uartData + i + 1) == 0x03))
-            {  //头和功能码校验
-              sensor.yuxue = *(uartData + i + 3) << 8;
-              sensor.yuxue += *(uartData + i + 4);
-              
-              rtu_num_plus();
-            }
-          }
-        break;
+//        case FS_485 :  //精迅风速，01 03 02 00 17 F8 4A
+//          if(len == (*(uartData + i + 2) + 5))  //长度校验
+//          {
+//            if((*(uartData + i + 0) == 0x01) && (*(uartData + i + 1) == 0x03))
+//            {  //头和功能码校验
+//              sensor.fs = *(uartData + i + 3) << 8;
+//              sensor.fs += *(uartData + i + 4);
+//              
+//              sensor.fs = sensor.fs / 10;
+//              
+//              rtu_num_plus();
+//            }
+//          }
+//        break;
+//        
+//        case FX_485 :  //精迅风向，02 03 02 00 0F BC 40
+//          if(len == (*(uartData + i + 2) + 5))  //长度校验
+//          {
+//            if((*(uartData + i + 0) == 0x02) && (*(uartData + i + 1) == 0x03))
+//            {  //头和功能码校验
+//              sensor.fx = *(uartData + i + 3) << 8;
+//              sensor.fx += *(uartData + i + 4);
+//              
+//              rtu_num_plus();
+//            }
+//          }
+//        break;
+//        
+//        case yuxue_485 :  //精迅雨雪，03 03 00 10 00 01 84 2D
+//          if(len == (*(uartData + i + 2) + 5))  //长度校验
+//          {
+//            if((*(uartData + i + 0) == 0x03) && (*(uartData + i + 1) == 0x03))
+//            {  //头和功能码校验
+//              sensor.yuxue = *(uartData + i + 3) << 8;
+//              sensor.yuxue += *(uartData + i + 4);
+//              
+//              rtu_num_plus();
+//            }
+//          }
+//        break;
         
 //        case FS_485 :  //风速，01 03 02 00 26 39 9E
 //          if(len == (*(uartData + i + 2) + 5))  //长度校验
@@ -500,20 +546,25 @@ void send_Cmd()
 //    USART_Puts(UART4, "UV", strlen("UV"));
 	switch (rtu_data.addr)//服务器检测参数地址
 	{
-        case FS_485 :  //精迅风速，01 03 00 16 00 01 65 CE
-          send_read_RTU(0x01, 0x03, 0x16, 0x01, send_data.cmd);
+        case PDX_485 :  //配电箱，0A 03 00 3C 00 0C 84 B8
+          send_read_RTU(0x0A, 0x03, 0x3C, 0x0C, send_data.cmd);
           len = 8;
         break;
         
-        case FX_485 :  //精迅风向，02 03 00 17 00 01 34 3D
-          send_read_RTU(0x02, 0x03, 0x17, 0x01, send_data.cmd);
-          len = 8;
-        break;
-        
-        case yuxue_485 :  //精迅雨雪，03 03 00 10 00 01 84 2D
-          send_read_RTU(0x03, 0x03, 0x10, 0x01, send_data.cmd);
-          len = 8;
-        break;
+//        case FS_485 :  //精迅风速，01 03 00 16 00 01 65 CE
+//          send_read_RTU(0x01, 0x03, 0x16, 0x01, send_data.cmd);
+//          len = 8;
+//        break;
+//        
+//        case FX_485 :  //精迅风向，02 03 00 17 00 01 34 3D
+//          send_read_RTU(0x02, 0x03, 0x17, 0x01, send_data.cmd);
+//          len = 8;
+//        break;
+//        
+//        case yuxue_485 :  //精迅雨雪，03 03 00 10 00 01 84 2D
+//          send_read_RTU(0x03, 0x03, 0x10, 0x01, send_data.cmd);
+//          len = 8;
+//        break;
         
 //        case FS_485 :  //风速，01 03 00 00 00 01 84 0A
 //          send_read_RTU(0x01, 0x03, 0x00, 0x01, send_data.cmd);

@@ -40,6 +40,18 @@ typedef struct
 //    ST_ITEM wat4;  //水帘
 //    ST_ITEM yang;  //内，遮阳1
 //    ST_ITEM yang1;  //外，遮阳2
+    ST_ITEM UA;
+    ST_ITEM UB;
+    ST_ITEM UC;
+    ST_ITEM IA;
+    ST_ITEM IB;
+    ST_ITEM IC;
+    ST_ITEM IL;
+    ST_ITEM TA;
+    ST_ITEM TB;
+    ST_ITEM TC;
+    ST_ITEM TN;
+    ST_ITEM TE;
 }DATA;
 //要发送的数据结构体
 typedef struct
@@ -57,18 +69,30 @@ extern ST_EVNBALEDAT *psenddat;
 typedef struct
 {
 //  float shade ; //shade 遮阳
-  float co2; //
-  float pm25;//PM2.5
-  float ultvio;//紫外线
-  float light;//光照
-  float temp;//温度
-  float humi;//湿度
-  float tvoc;//tvoc
-  float fx;//风向
-  float fs;//风速
+//  float co2; //
+//  float pm25;//PM2.5
+//  float ultvio;//紫外线
+//  float light;//光照
+//  float temp;//温度
+//  float humi;//湿度
+//  float tvoc;//tvoc
+//  float fx;//风向
+//  float fs;//风速
 //  float so2;  //so2
-  float pressure;  //气压
-  float yuxue;  //是否有雨雪
+//  float pressure;  //气压
+//  float yuxue;  //是否有雨雪
+  float UA;  //A相电压
+  float UB;
+  float UC;
+  float IA;  //A相电流
+  float IB;
+  float IC;
+  float IL;  //漏电流
+  float TA;  //A相温度
+  float TB;
+  float TC;
+  float TN;
+  float TE;  //环境温度
 }SENSORTYPE;
 extern void send();
 extern void package_send(unsigned char *pdat, unsigned char len, unsigned char flag,unsigned char flag1);

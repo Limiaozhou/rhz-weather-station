@@ -115,12 +115,12 @@ void Evn_Packagedat()
     /*十进制21，  21+3；
     6x(x是传感器类型psenddat->data.len )+2个crc16+2个tea+2个cmdlen+8个地址code+4个头长版本-3
     （从第三个开始不含第三个）；15+6x*/
-	psenddat->len = 15+6*1;
+	psenddat->len = 15+6*13;
 
 	psenddat->ver = 38;
 	mem_copy(psenddat->addr, addr, 8);
 	psenddat->data.cmd = 0xD0;
-	psenddat->data.len = 6*1;//十进制6,多少种检测参数，一种6字节
+	psenddat->data.len = 6*13;//十进制6,多少种检测参数，一种6字节
 
 //	psenddat->data.shade.key[0] = 0x01;
 //	psenddat->data.shade.key[1] = 0x44; // 小棚遮阳服务器上的地址
@@ -176,11 +176,10 @@ void Evn_Packagedat()
 //    psenddat->data.pm25.key[0] = 0x00;
 //	psenddat->data.pm25.key[1] = 0x68; //PM2.5
 //	mem_copy(psenddat->data.pm25.dat, (unsigned char*)&(sensor.pm25), 4);
-    
+//    
 //    psenddat->data.yuxue.key[0] = 0x00;
 //	psenddat->data.yuxue.key[1] = 0x18; //是否有雨雪
 //	mem_copy(psenddat->data.yuxue.dat, (unsigned char*)&(sensor.yuxue), 4);
-//    
     
     psenddat->data.ventilate.key[0] = 0x00;
 	psenddat->data.ventilate.key[1] = 0x01; //风机
@@ -201,6 +200,54 @@ void Evn_Packagedat()
 //    psenddat->data.yang1.key[0] = 0x00;
 //	psenddat->data.yang1.key[1] = 0x09; //外，遮阳2
 //	mem_copy(psenddat->data.yang1.dat, (unsigned char*)&(wat_fer.yang1), 4);
+    
+    psenddat->data.UA.key[0] = 0;
+	psenddat->data.UA.key[1] = 194;
+	mem_copy(psenddat->data.UA.dat, (unsigned char*)&(sensor.UA), 4);
+    
+    psenddat->data.UB.key[0] = 0;
+	psenddat->data.UB.key[1] = 196;
+	mem_copy(psenddat->data.UB.dat, (unsigned char*)&(sensor.UB), 4);
+    
+    psenddat->data.UC.key[0] = 0;
+	psenddat->data.UC.key[1] = 198;
+	mem_copy(psenddat->data.UC.dat, (unsigned char*)&(sensor.UC), 4);
+    
+    psenddat->data.IA.key[0] = 0;
+	psenddat->data.IA.key[1] = 200;
+	mem_copy(psenddat->data.IA.dat, (unsigned char*)&(sensor.IA), 4);
+    
+    psenddat->data.IB.key[0] = 0;
+	psenddat->data.IB.key[1] = 202;
+	mem_copy(psenddat->data.IB.dat, (unsigned char*)&(sensor.IB), 4);
+    
+    psenddat->data.IC.key[0] = 0;
+	psenddat->data.IC.key[1] = 204;
+	mem_copy(psenddat->data.IC.dat, (unsigned char*)&(sensor.IC), 4);
+    
+    psenddat->data.IL.key[0] = 0;
+	psenddat->data.IL.key[1] = 206;
+	mem_copy(psenddat->data.IL.dat, (unsigned char*)&(sensor.IL), 4);
+    
+    psenddat->data.TA.key[0] = 0;
+	psenddat->data.TA.key[1] = 208;
+	mem_copy(psenddat->data.TA.dat, (unsigned char*)&(sensor.TA), 4);
+    
+    psenddat->data.TB.key[0] = 0;
+	psenddat->data.TB.key[1] = 210;
+	mem_copy(psenddat->data.TB.dat, (unsigned char*)&(sensor.TB), 4);
+    
+    psenddat->data.TC.key[0] = 0;
+	psenddat->data.TC.key[1] = 212;
+	mem_copy(psenddat->data.TC.dat, (unsigned char*)&(sensor.TC), 4);
+    
+    psenddat->data.TN.key[0] = 0;
+	psenddat->data.TN.key[1] = 214;
+	mem_copy(psenddat->data.TN.dat, (unsigned char*)&(sensor.TN), 4);
+    
+    psenddat->data.TE.key[0] = 0;
+	psenddat->data.TE.key[1] = 216;
+	mem_copy(psenddat->data.TE.dat, (unsigned char*)&(sensor.TE), 4);
     
 	Check_CalaCRC16((unsigned char *)psenddat + 3, psenddat->len - 2);  //从buf[3]开始crc校验
   

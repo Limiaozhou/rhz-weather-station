@@ -235,9 +235,9 @@ int main()
 {
  
   STM32_IAR_SYS_INIT();  //内部36M
-    UART4_init(36, 115200);//uart4，115200，debug
+    UART4_init(36, 9600);//uart4，115200，debug
     Usart_init(2,9600);// usart2，9600，hmi
-  Usart_init(3,9600);  //uart3，9600，485
+  Usart_init(3,115200);  //uart3，9600，485
   TIM4_Int_Init(1999,3599);  //2000 * 3600 / 36M = 200ms
 
   RTC_Init();
@@ -279,11 +279,11 @@ int main()
         send();	//发送数据到服务器
         send_flag=0;
       }
-//      if(send485_flag)  //2s
-//      {
-//        send485_flag=0;
-//        send_Cmd();	//发送485命令，读传感器
-//      }
+      if(send485_flag)  //2s
+      {
+        send485_flag=0;
+        send_Cmd();	//发送485命令，读传感器
+      }
       
 //      if(hmi_send_flag)  //5s
 //      {

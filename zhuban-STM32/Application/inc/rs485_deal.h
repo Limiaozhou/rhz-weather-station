@@ -80,6 +80,7 @@
 
 #define  SO2_485 0x6E
 #define  yuxue_485 0x18  // «∑Ò”–”Í—©
+#define  PDX_485 194  //≈‰µÁœ‰
 
 typedef struct
 {

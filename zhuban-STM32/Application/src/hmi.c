@@ -4,25 +4,25 @@ void hmi_send(void)  //发送屏幕数据
 {
     unsigned char buf[25] = {0};  //发送数据缓存
     unsigned char end_buf[3] = {0xFF, 0xFF, 0xFF};  //发送数据结束符
-    int data = 0;
+//    int data = 0;
     unsigned char len = 0;
     
-    data = (int)(sensor.temp * 100);  //温度
-    len = sprintf((char *)buf, "main.x0.val=%d", data);
-    USART_Puts(USART2, buf, len);
-    USART_Puts(USART2, end_buf, 3);
-    delay_ms(100);
-    
-    data = (int)(sensor.humi * 100);  //湿度
-    len = sprintf((char *)buf, "main.x1.val=%d", data);
-    USART_Puts(USART2, buf, len);
-    USART_Puts(USART2, end_buf, 3);
-    delay_ms(100);
-    
-    data = (int)(sensor.light * 100);  //光照
-    len = sprintf((char *)buf, "main.x2.val=%d", data);
-    USART_Puts(USART2, buf, len);
-    USART_Puts(USART2, end_buf, 3);
+//    data = (int)(sensor.temp * 100);  //温度
+//    len = sprintf((char *)buf, "main.x0.val=%d", data);
+//    USART_Puts(USART2, buf, len);
+//    USART_Puts(USART2, end_buf, 3);
+//    delay_ms(100);
+//    
+//    data = (int)(sensor.humi * 100);  //湿度
+//    len = sprintf((char *)buf, "main.x1.val=%d", data);
+//    USART_Puts(USART2, buf, len);
+//    USART_Puts(USART2, end_buf, 3);
+//    delay_ms(100);
+//    
+//    data = (int)(sensor.light * 100);  //光照
+//    len = sprintf((char *)buf, "main.x2.val=%d", data);
+//    USART_Puts(USART2, buf, len);
+//    USART_Puts(USART2, end_buf, 3);
     
     if(wat_fer.ventilate)  //风机开显示按下颜色
     {
