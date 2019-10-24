@@ -80,6 +80,7 @@
 
 #define  SO2_485 0x6E
 #define  yuxue_485 0x18  // «∑Ò”–”Í—©
+#define IC_CARD_485 218  //ICø®
 
 typedef struct
 {

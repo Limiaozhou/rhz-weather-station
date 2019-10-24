@@ -25,21 +25,23 @@ typedef struct
 //    ST_ITEM co2;  
 //    ST_ITEM pm25; 
 //    ST_ITEM ultvio;//紫外线
-    ST_ITEM temp; 
-    ST_ITEM light; 
-    ST_ITEM humi;
+//    ST_ITEM temp; 
+//    ST_ITEM light; 
+//    ST_ITEM humi;
 //    ST_ITEM tvoc;
-    ST_ITEM fx;  //风向
-    ST_ITEM fs;  //风速
+//    ST_ITEM fx;  //风向
+//    ST_ITEM fs;  //风速
 //    ST_ITEM so2;  //so2
 //    ST_ITEM pressure;  //气压
-    ST_ITEM yuxue;  //是否有雨雪
-    
-    ST_ITEM ventilate;  //风机
-    ST_ITEM juanmo;  //卷膜
-    ST_ITEM wat4;  //水帘
-    ST_ITEM yang;  //内，遮阳1
-    ST_ITEM yang1;  //外，遮阳2
+//    ST_ITEM yuxue;  //是否有雨雪
+//    
+//    ST_ITEM ventilate;  //风机
+//    ST_ITEM juanmo;  //卷膜
+//    ST_ITEM wat4;  //水帘
+//    ST_ITEM yang;  //内，遮阳1
+//    ST_ITEM yang1;  //外，遮阳2
+  ST_ITEM iccard_id;
+  ST_ITEM iccard_state;
 }DATA;
 //要发送的数据结构体
 typedef struct
@@ -57,18 +59,20 @@ extern ST_EVNBALEDAT *psenddat;
 typedef struct
 {
 //  float shade ; //shade 遮阳
-  float co2; //
-  float pm25;//PM2.5
-  float ultvio;//紫外线
-  float light;//光照
-  float temp;//温度
-  float humi;//湿度
-  float tvoc;//tvoc
-  float fx;//风向
-  float fs;//风速
+//  float co2; //
+//  float pm25;//PM2.5
+//  float ultvio;//紫外线
+//  float light;//光照
+//  float temp;//温度
+//  float humi;//湿度
+//  float tvoc;//tvoc
+//  float fx;//风向
+//  float fs;//风速
 //  float so2;  //so2
-  float pressure;  //气压
-  float yuxue;  //是否有雨雪
+//  float pressure;  //气压
+//  float yuxue;  //是否有雨雪
+    float iccard_id;  //ic卡号
+    float iccard_state;  //ic卡状态
 }SENSORTYPE;
 extern void send();
 extern void package_send(unsigned char *pdat, unsigned char len, unsigned char flag,unsigned char flag1);
