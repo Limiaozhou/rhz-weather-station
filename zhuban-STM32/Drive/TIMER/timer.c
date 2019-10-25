@@ -61,7 +61,7 @@ void TIM4_IRQHandler(void)
   {
     Ana_Flag=1;
     
-    if(send485_cnt++>=10)//2秒钟发送一个485命令
+    if(send485_cnt++>=20)//4秒钟发送一个485命令
     {
       send485_flag=1;
       send485_cnt=0;

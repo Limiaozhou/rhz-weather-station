@@ -35,7 +35,7 @@ static char send_num_total=0; //所接485的个数
 
 int Num_Rea_485=0;
 
-
+unsigned char iccard_read_flag = 0;
 
 /***************************************
 *@DESCRIPTION: --打包RTU协议
@@ -340,10 +340,12 @@ void get_RTU_data(unsigned char *uartData,unsigned char len)
 //  USART_Puts(USART1, (unsigned char *)uartData, len);//debug
   while((i < len) && (len >= 4))
   {
-      if(len == 4)
+      if((*(uartData + i)) == 0x1C)
       {
           sensor.iccard_id = chartofloat(uartData + i);
           sensor.iccard_state = !sensor.iccard_state;
+          iccard_read_flag = 1;
+          break;
       }
 //    if (Check_CheckCRC16(uartData + i, *(uartData + i + 2) ))
 //    {
@@ -504,7 +506,7 @@ void send_Cmd()
     unsigned char i;
 	rtu_data.addr = send_code[send_num];
     unsigned char ic_send_buf[10] = {0};
-    unsigned char ic_send_read_cmd[10] = {0xAA, 0xBB, 0x06, 0x00, 0x00, 0x00, 0x01, 0x06, 0x62, 0x65};
+    unsigned char ic_send_read_cmd[10] = {0xAA, 0xBB, 0x06, 0x00, 0x00, 0x00, 0x01, 0x06, 0x02, 0x05};
 //    USART_Puts(UART4, "UV", strlen("UV"));
 	switch (rtu_data.addr)//服务器检测参数地址
 	{

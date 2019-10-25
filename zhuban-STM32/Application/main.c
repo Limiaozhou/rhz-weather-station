@@ -73,6 +73,8 @@ INFO_MUL *Info_Sd;
 INFO_485 *Flash_485;
 INFO_485 *Sd_485;
 
+extern unsigned char iccard_read_flag;
+
 //#define Num_485 20
 
 //每五分钟发送一个DNS解析命令，跟上一次解析的IP地址作比较，若两次解析的IP地址相同，则继续发送，若不同，需要重新发命令让其连网，若发送后五秒内无回应，则重启设备
@@ -274,10 +276,11 @@ int main()
         GenericApp_package_Deal(3);  //get_RTU_data，485
       }
 
-      if(send_flag)  //10s
+      if(send_flag || iccard_read_flag)  //10s，刷卡完
       {
         send();	//发送数据到服务器
         send_flag=0;
+        iccard_read_flag = 0;
       }
       if(send485_flag)  //2s
       {
