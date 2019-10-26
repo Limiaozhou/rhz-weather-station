@@ -223,6 +223,17 @@ void WIFI2_init(void)
 	
 }
 
+void deal_other(void)
+{
+    IWDG_Feed();
+    if(DMA_Usart_Receive(1))//wifi2 uart1
+        GenericApp_package_Deal(1);
+    if(DMA_Usart_Receive(2))
+        GenericApp_package_Deal(2);  //获取屏幕串口数据
+    if(DMA_Usart_Receive(3))
+        GenericApp_package_Deal(3);  //get_RTU_data，485
+}
+
 /***************************************
 *@DESCRIPTION: --主函数
 *
@@ -233,6 +244,11 @@ void WIFI2_init(void)
 
 int main()
 {
+    struct Timer timer_other;
+    struct Timer timer_send;
+    struct Timer timer_send_cmd;
+    struct Timer timer_hmi_send;
+    struct Timer timer_relay_control;
  
   STM32_IAR_SYS_INIT();  //内部36M
     UART4_init(36, 115200);//uart4，115200，debug
@@ -250,53 +266,69 @@ int main()
   
   get_Flash_Info();
 
+  timer_init(&timer_other, deal_other, 1, 1);  //200ms
+  timer_start(&timer_other);
+  
+  timer_init(&timer_send, send, 50, 50);  //10S
+  timer_start(&timer_send);
+  
+  timer_init(&timer_send_cmd, send_Cmd, 10, 10);  //2S
+  timer_start(&timer_send_cmd);
+  
+  timer_init(&timer_hmi_send, hmi_send, 25, 25);  //5S
+  timer_start(&timer_hmi_send);
+  
+  timer_init(&timer_relay_control, relay_board_control, 25, 25);  //5S
+  timer_start(&timer_relay_control);
 
   while(1)
   {
-    if(Ana_Flag)  //200ms间隔
-    {
-      Ana_Flag = 0;
-      IWDG_Feed();
-
-      if(DMA_Usart_Receive(1))//wifi2 uart1
-      {
-//        USART_Puts(UART4,"DMA_Usart_Receive",strlen("DMA_Usart_Receive"));
-        GenericApp_package_Deal(1);
-      }
-//      USART_Puts(UART4,"485recv",strlen("485recv"));
-      if(DMA_Usart_Receive(2))
-      {
-        GenericApp_package_Deal(2);  //获取屏幕串口数据
-      }
+      timer_loop();
       
-      if(DMA_Usart_Receive(3))
-      {
-        GenericApp_package_Deal(3);  //get_RTU_data，485
-      }
-
-      if(send_flag)  //10s
-      {
-        send();	//发送数据到服务器
-        send_flag=0;
-      }
-      if(send485_flag)  //2s
-      {
-        send485_flag=0;
-        send_Cmd();	//发送485命令，读传感器
-      }
-      
-      if(hmi_send_flag)  //5s
-      {
-        hmi_send_flag = 0;
-        hmi_send();  //发送屏幕数据
-      }
-
-      if(relay_send_flag)  //5s
-      {
-        relay_send_flag = 0;
-        relay_board_control();  //发送控制继电器板命令
-      }
-    }
+//    if(Ana_Flag)  //200ms间隔
+//    {
+//      Ana_Flag = 0;
+//      IWDG_Feed();
+//
+//      if(DMA_Usart_Receive(1))//wifi2 uart1
+//      {
+////        USART_Puts(UART4,"DMA_Usart_Receive",strlen("DMA_Usart_Receive"));
+//        GenericApp_package_Deal(1);
+//      }
+////      USART_Puts(UART4,"485recv",strlen("485recv"));
+//      if(DMA_Usart_Receive(2))
+//      {
+//        GenericApp_package_Deal(2);  //获取屏幕串口数据
+//      }
+//      
+//      if(DMA_Usart_Receive(3))
+//      {
+//        GenericApp_package_Deal(3);  //get_RTU_data，485
+//      }
+//
+//      if(send_flag)  //10s
+//      {
+//        send();	//发送数据到服务器
+//        send_flag=0;
+//      }
+//      if(send485_flag)  //2s
+//      {
+//        send485_flag=0;
+//        send_Cmd();	//发送485命令，读传感器
+//      }
+//      
+//      if(hmi_send_flag)  //5s
+//      {
+//        hmi_send_flag = 0;
+//        hmi_send();  //发送屏幕数据
+//      }
+//
+//      if(relay_send_flag)  //5s
+//      {
+//        relay_send_flag = 0;
+//        relay_board_control();  //发送控制继电器板命令
+//      }
+//    }
   }
   mem_free(SRAMIN, sizeof(ST_EVNBALEDAT));
 }

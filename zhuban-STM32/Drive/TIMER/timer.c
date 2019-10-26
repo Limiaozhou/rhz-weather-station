@@ -22,6 +22,9 @@
 #include "usart.h"
 #include "sys.h"
 #include "air_cond_swi.h"
+
+
+
 //extern ST_EVNBALEDAT *psenddat;
 //extern void packet_send(unsigned char *pdat);
 char Ana_Flag=0;
@@ -59,6 +62,7 @@ void TIM4_IRQHandler(void)
 { 		    		  			    
   if(TIM4->SR&0X0001)//溢出中断(200ms)
   {
+      timer_ticks();
     Ana_Flag=1;
     
     if(send485_cnt++>=10)//2秒钟发送一个485命令
